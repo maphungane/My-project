@@ -1,0 +1,26 @@
+import React, { useState, useEffect } from 'react';
+import { FlatList, View, Text } from 'react-native';
+
+function EventList() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetch('http://your-backend-url/events')
+      .then(response => response.json())
+      .then(data => setEvents(data));
+  }, []);
+
+  return (
+    <FlatList
+      data={events}
+      renderItem={({ item }) => (
+        <View>
+          <Text>{item.name}</Text>
+          <Text>{item.date}</Text>
+          {/* ... other event details */}
+        </View>
+      )}
+      keyExtractor={item => item._id}
+    />
+  );
+}
